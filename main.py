@@ -172,14 +172,21 @@ def predictValue(values):
     return int(np.argmax(prediction))
 
 def main():
+    option = int(input("1 - treinar modelo, 2 - Testar modelo, 3 - Verificar valor de teste \n"))
+    
     model_name = 'mnist_model.keras'
-    # train_new_model(model_name)
-    # forward(model_name, 10000)
-    (X_train, Y_train), (X_test, Y_test) = keras.datasets.mnist.load_data()
-    indexTest = 1
-    X = clean_input_data(X_test[indexTest])
-    prediction = predictValue(X)
-    print(f"Esperado: {Y_test[indexTest]}, Resultado: {prediction}")
+    if option == 1:
+        train_new_model(model_name)
+    elif option == 2:
+        forward(model_name, 10000)
+    else:
+        indexDeTest = input("Digite um valor para testar: ")
+        (X_train, Y_train), (X_test, Y_test) = keras.datasets.mnist.load_data()
+        indexTest = 1
+        X = clean_input_data(X_test[indexTest])
+        prediction = predictValue(X)
+        print(f"Esperado: {Y_test[indexTest]}, Resultado: {prediction}")
+        
     
     
 
