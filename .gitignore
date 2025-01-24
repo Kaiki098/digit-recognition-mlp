@@ -1,0 +1,14 @@
+# Ignorar diretórios de cache do Python
+__pycache__/
+
+# Ignorar arquivos de modelo treinado
+mnist_model.keras
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de configuração do ambiente
+.env
+
+# Ignorar arquivos de saída do VS Code
+.vscode/
