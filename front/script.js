@@ -1,4 +1,6 @@
 async function getPrediction(input) {
+  console.log("Input para predição: ", input);
+
   const response = await fetch("http://localhost:5000/predict", {
     method: "POST",
     headers: {
@@ -7,7 +9,7 @@ async function getPrediction(input) {
     body: JSON.stringify({ input: input }),
   });
   const result = await response.json();
-  return result.prediction
+  return result.prediction;
 }
 
 // Exemplo de uso
@@ -125,6 +127,7 @@ let input = [
     0, 0, 0,
   ],
 ];
+
 let isDrawing = false;
 
 function createGrid(matrix) {
@@ -140,12 +143,12 @@ function createGrid(matrix) {
       }
       cell.addEventListener("mousedown", () => {
         isDrawing = true;
-        matrix[row][col] = matrix[row][col] > 0 ? 0 : 1;
+        matrix[row][col] = matrix[row][col] > 0 ? 0 : 250;
         cell.classList.toggle("active");
       });
       cell.addEventListener("mouseover", () => {
         if (isDrawing) {
-          matrix[row][col] = 1;
+          matrix[row][col] = 250;
           cell.classList.add("active");
         }
       });
@@ -177,7 +180,6 @@ buttonClear.addEventListener("click", () => {
   createGrid(input);
 });
 button.addEventListener("click", async () => {
-  console.log("Input para predição: ",input)
   const prediction = await getPrediction(input);
   result.innerText = `Número predizido: ${prediction}.`;
 });
