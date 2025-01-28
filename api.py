@@ -10,6 +10,8 @@ def predict():
     data = request.json
     X = clean_input_data(data['input'])
     
+    print(X)
+    
     prediction = predictValue(X)
     print(prediction)
     return jsonify({'prediction': prediction})

@@ -6,12 +6,12 @@ async function getPrediction(input) {
     },
     body: JSON.stringify({ input: input }),
   });
-  const prediction = await response.json();
-  console.log(prediction);
+  const result = await response.json();
+  return result.prediction
 }
 
 // Exemplo de uso
-const input = [
+let input = [
   [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0,
@@ -125,9 +125,59 @@ const input = [
     0, 0, 0,
   ],
 ];
+let isDrawing = false;
+
+function createGrid(matrix) {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = ""; // Limpa o grid existente
+
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix[row].length; col++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      if (matrix[row][col] > 0) {
+        cell.classList.add("active");
+      }
+      cell.addEventListener("mousedown", () => {
+        isDrawing = true;
+        matrix[row][col] = matrix[row][col] > 0 ? 0 : 1;
+        cell.classList.toggle("active");
+      });
+      cell.addEventListener("mouseover", () => {
+        if (isDrawing) {
+          matrix[row][col] = 1;
+          cell.classList.add("active");
+        }
+      });
+      cell.addEventListener("mouseup", () => {
+        isDrawing = false;
+      });
+      grid.appendChild(cell);
+    }
+  }
+}
+
+document.addEventListener("mouseup", () => {
+  isDrawing = false;
+});
+
+createGrid(input);
 
 const button = document.getElementById("button");
+const buttonClear = document.getElementById("button-clear");
+const result = document.getElementById("result");
 
-button.addEventListener("click", () => {
-  getPrediction(input);
+buttonClear.addEventListener("click", () => {
+  // Redefine a matriz e atualiza a grade
+  for (let row = 0; row < input.length; row++) {
+    for (let col = 0; col < input[row].length; col++) {
+      input[row][col] = 0;
+    }
+  }
+  createGrid(input);
+});
+button.addEventListener("click", async () => {
+  console.log("Input para predição: ",input)
+  const prediction = await getPrediction(input);
+  result.innerText = `Número predizido: ${prediction}.`;
 });

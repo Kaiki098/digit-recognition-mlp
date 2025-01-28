@@ -180,9 +180,8 @@ def main():
     elif option == 2:
         forward(model_name, 10000)
     else:
-        indexDeTest = input("Digite um valor para testar: ")
+        indexTest = int(input("Digite um valor para testar: "))
         (X_train, Y_train), (X_test, Y_test) = keras.datasets.mnist.load_data()
-        indexTest = 1
         X = clean_input_data(X_test[indexTest])
         prediction = predictValue(X)
         print(f"Esperado: {Y_test[indexTest]}, Resultado: {prediction}")
